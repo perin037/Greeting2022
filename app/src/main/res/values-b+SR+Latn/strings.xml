@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Pozdravi u 2022!</string>
+    <string name="please_enter_name">Ovde ide Vaše ime</string>
+    <string name="say_hello">Pozdravi</string>
+    <string name="greeting">Ćao %s!</string>
+    <string name="greetingg">Zdravo, imaš %2$d godina i ti si  %1$s! </string>
+    <string name="cancel">Odustani</string>
+    <string name="accept">Prihvati</string>
+</resources>
