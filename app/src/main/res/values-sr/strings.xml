@@ -7,4 +7,7 @@
     <string name="greetingg">Здраво, ти имаш %2$d и зовеш се  %1$s! </string>
     <string name="cancel">Одустани</string>
     <string name="accept">Прихвати</string>
+    <string name="enter_your_age">године</string>
+    <string name="enter_your_last_name">презиме</string>
+    <string name="enter_your_first_name">име</string>
 </resources>
