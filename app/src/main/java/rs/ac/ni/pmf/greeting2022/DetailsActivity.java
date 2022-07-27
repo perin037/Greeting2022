@@ -1,7 +1,11 @@
 package rs.ac.ni.pmf.greeting2022;
 
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +16,36 @@ public class DetailsActivity extends AppCompatActivity {
 
     public static final String TAG = "Greeting_info";
     private int _defaultAge = -1;
+    private static final String DEFAULT_AGE = "DEFAULT_AGE";
+    private static final String AGE_DATA = "AGE_DATA";
+
+    public static ActivityResultContract<Integer, Integer> DETAILS_ACTIVITY_CONTRACT = new ActivityResultContract<Integer, Integer>() {
+        @NonNull
+        @Override
+        public Intent createIntent(@NonNull Context context, Integer input) {
+            final Intent intent = new Intent(context, DetailsActivity.class);
+            intent.putExtra(DEFAULT_AGE, input);
+
+            return intent;
+        }
+
+        @Override
+        public Integer parseResult(int resultCode, @Nullable Intent intent) {
+            if (resultCode == RESULT_CANCELED) {
+                Log.i(TAG, "Age selection canceled");
+                return null;
+            }
+
+            if (resultCode == RESULT_OK) {
+                if (intent == null) {
+                    return null;
+                }
+                return intent.getIntExtra(AGE_DATA, -1);
+
+            }
+            return null;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +54,7 @@ public class DetailsActivity extends AppCompatActivity {
 
 
         final Intent intent = getIntent();
-        _defaultAge = intent.getIntExtra("DEFAULT_AGE", -1);
+        _defaultAge = intent.getIntExtra(DEFAULT_AGE, -1);
 
         findViewById(R.id.btnCancel).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -28,7 +62,7 @@ public class DetailsActivity extends AppCompatActivity {
                 cancel(view);
             }
         });
-        
+
         findViewById(R.id.btnAcceptDetails).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,7 +88,7 @@ public class DetailsActivity extends AppCompatActivity {
         }
 
         final Intent resultIntent = new Intent();//prazan jer ne pokrece akciju
-        resultIntent.putExtra("AGE_DATA", age);
+        resultIntent.putExtra(AGE_DATA, age);
         setResult(RESULT_OK, resultIntent);
         finish();
     }

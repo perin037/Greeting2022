@@ -6,5 +6,8 @@
     <string name="greetingg">Hello %1$s, you have %2$d!</string>
     <string name="cancel">Cancel</string>
     <string name="accept">accept</string>
+    <string name="enter_your_age">Enter your age</string>
+    <string name="enter_your_last_name">enter_your_last_name</string>
+    <string name="enter_your_first_name">enter_your_first_name</string>
 
 </resources>

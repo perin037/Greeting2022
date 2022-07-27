@@ -1,6 +1,7 @@
 package rs.ac.ni.pmf.greeting2022;
 
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,16 +17,15 @@ import android.widget.TextView;
 public class GreetingActivity extends AppCompatActivity {
 
     public static final String TAG = "Greeting_info";
-
-    private int REQUEST_DETAILS = 1;
     private int _currentAge = -1;
 
     private EditText _editText;
     private TextView _label;
 
 
-    //dodatak zbog deprecated
-    private ActivityResultLauncher<Intent> _detailsActivityLauncher;
+    //dodato
+    //private ActivityResultLauncher<Intent> _detailsActivityLauncher;
+    private ActivityResultLauncher<Integer> _detailsActivityLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,25 +44,28 @@ public class GreetingActivity extends AppCompatActivity {
         _label = findViewById(R.id.labelHello);
 
 
-        findViewById(R.id.btnShowDetails).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDetails(view);
-            }
-        });
+        findViewById(R.id.btnShowDetails).setOnClickListener(this::showDetails);
 
-        //dodatak
-        _detailsActivityLauncher = registerForActivityResult(
+        _detailsActivityLauncher = registerForActivityResult(DetailsActivity.DETAILS_ACTIVITY_CONTRACT, this::onDetailsActivityResult);
+        /*_detailsActivityLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> onDetailsActivityResult(result.getResultCode(), result.getData())
-        );
+                //moze i sa ovim callback-om da tu odmah radimo..
+                /*new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if(result.getResultCode() == RESULT_OK){
+                            onDetailsActivityResult(result.getResultCode(), result.getData());
+                        }
+                    }
+                }*/
+        /*);*/
+
+
     }
-
-
 
     public void sayHello(View view) {
         final String name = _editText.getText().toString();
-
         //final String greeting = getResources().getQuantityString(R.plurals., 11, name, 11);
         //final String greeting = getResources().getString(R.string.greeting, name);
         final String greeting = getResources().getString(R.string.greetingg, name, 45);
@@ -72,24 +75,25 @@ public class GreetingActivity extends AppCompatActivity {
 
 
     private void showDetails(View view) {
-        final Intent intent = new Intent(this, DetailsActivity.class);
-        intent.putExtra("DEFAULT_AGE", 20);
+        //final Intent intent = new Intent(this, DetailsActivity.class);
+        //intent.putExtra("DEFAULT_AGE", 20);
 
         //startActivity(intent);
         //startActivityForResult(intent, REQUEST_DETAILS);
-
         //dodatak
-        _detailsActivityLauncher.launch(intent);
+        _detailsActivityLauncher.launch(20);
     }
 
 
     /*@Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if(requestCode == REQUEST_DETAILS){
             if(resultCode == RESULT_CANCELED){
                 Log.i(TAG, "Age selection canceled");
             }
+
             if(resultCode == RESULT_OK){
                 if(data == null){
                     return;
@@ -100,20 +104,15 @@ public class GreetingActivity extends AppCompatActivity {
         }
     }*/
 
-    //dodatak - umesto onActivityResult
-    private void onDetailsActivityResult(int resultCode, Intent data) {
-        if(resultCode == RESULT_CANCELED){
-            Log.i(TAG, "Age selection canceled");
+    private void onDetailsActivityResult(Integer age){
+        if(age == null){
+            Log.i(TAG,"No age result in details activity..");
         }
-        if(resultCode == RESULT_OK){
-            if(data == null){
-                return;
-            }
-            _currentAge = data.getIntExtra("AGE_DATA", -1);
-            showCurrentAge();
-        }
-
+        _currentAge = age;
+        showCurrentAge();
     }
+
+
 
     private void showCurrentAge() {
         final TextView currentAge = findViewById(R.id.labelCurrentAge);
