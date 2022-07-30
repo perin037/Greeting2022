@@ -17,15 +17,17 @@ import android.widget.TextView;
 public class GreetingActivity extends AppCompatActivity {
 
     public static final String TAG = "Greeting_info";
-    private int _currentAge = -1;
+    //private int _currentAge = -1;
 
     private EditText _editText;
     private TextView _label;
 
+    private Person _person;
 
     //dodato
     //private ActivityResultLauncher<Intent> _detailsActivityLauncher;
-    private ActivityResultLauncher<Integer> _detailsActivityLauncher;
+    //private ActivityResultLauncher<Integer> _detailsActivityLauncher;
+    private ActivityResultLauncher<Person> _detailsActivityLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,15 +62,20 @@ public class GreetingActivity extends AppCompatActivity {
                     }
                 }*/
         /*);*/
-
-
     }
 
     public void sayHello(View view) {
         final String name = _editText.getText().toString();
+        final int currentAge = _person != null ? _person.getAge() : -1;
+        final String currentFirst = _person != null ? _person.getFirstName() : "name";
+        final String currentLast = _person != null ? _person.getLastName() : "last";
+        final String greeting = getResources()
+                .getQuantityString(R.plurals.greting, currentAge, currentFirst, currentAge, currentLast);
+
         //final String greeting = getResources().getQuantityString(R.plurals., 11, name, 11);
         //final String greeting = getResources().getString(R.string.greeting, name);
-        final String greeting = getResources().getString(R.string.greetingg, name, 45);
+        //final String greeting = getResources().getString(R.string.greetingg, name, 45);
+
 
         _label.setText(greeting);
     }
@@ -81,7 +88,7 @@ public class GreetingActivity extends AppCompatActivity {
         //startActivity(intent);
         //startActivityForResult(intent, REQUEST_DETAILS);
         //dodatak
-        _detailsActivityLauncher.launch(20);
+        _detailsActivityLauncher.launch(_person);
     }
 
 
@@ -104,11 +111,12 @@ public class GreetingActivity extends AppCompatActivity {
         }
     }*/
 
-    private void onDetailsActivityResult(Integer age){
-        if(age == null){
+    private void onDetailsActivityResult(Person person){
+        if(person == null){
             Log.i(TAG,"No age result in details activity..");
         }
-        _currentAge = age;
+        //_currentAge = age;
+        _person = person;
         showCurrentAge();
     }
 
@@ -116,6 +124,8 @@ public class GreetingActivity extends AppCompatActivity {
 
     private void showCurrentAge() {
         final TextView currentAge = findViewById(R.id.labelCurrentAge);
-        currentAge.setText("Current age " + _currentAge);
+        if(_person != null) {
+            currentAge.setText("Current age " + _person.getAge());
+        }
     }
 }
