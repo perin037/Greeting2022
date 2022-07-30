@@ -9,10 +9,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.material.snackbar.Snackbar;
 
 public class GreetingActivity extends AppCompatActivity {
 
@@ -113,10 +117,30 @@ public class GreetingActivity extends AppCompatActivity {
 
     private void onDetailsActivityResult(Person person){
         if(person == null){
-            Log.i(TAG,"No age result in details activity..");
+            //Toast.makeText(this, "Kliknuto na cancel..", Toast.LENGTH_LONG).show();
+
+            final View toastView = getLayoutInflater().inflate(R.layout.custom_toast, null);
+            TextView firstLineView = toastView.findViewById(R.id.toast_first_line);
+            TextView secondLineView = toastView.findViewById(R.id.toast_second_line);
+            firstLineView.setText("This is custom toast");
+            secondLineView.setText("Cancelled last action");
+
+            final Toast myToast = new Toast(getApplicationContext());
+            myToast.setDuration(Toast.LENGTH_LONG);
+            myToast.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL, 0, 0);
+            myToast.setView(toastView);
+            myToast.show();
+            return;
         }
         //_currentAge = age;
         _person = person;
+
+        Snackbar.make(findViewById(R.id.main_layout),
+                "Data recived.. First name: " + _person.getFirstName(),
+                Snackbar.LENGTH_INDEFINITE)
+                .setAction("Greet", this::sayHello)
+                .show();
+
         showCurrentAge();
     }
 

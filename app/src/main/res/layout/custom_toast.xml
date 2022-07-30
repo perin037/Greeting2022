@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/purple_200">
+
+    <TextView
+        android:id="@+id/toast_first_line"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="first line"/>
+
+    <TextView
+        android:id="@+id/toast_second_line"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="second line"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
