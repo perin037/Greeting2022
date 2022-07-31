@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/main_layout"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".GreetingActivity">
+    tools:context=".GreetingActivity"
 
-    <TextView
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <TextView
         android:id="@+id/labelHello"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -25,7 +33,7 @@
         app:layout_constraintTop_toBottomOf="@+id/btnShowDetails"
         tools:text="Hello" />
 
-    <Button
+        <Button
         android:id="@+id/btnGreet"
 
         android:layout_width="wrap_content"
@@ -43,7 +51,7 @@
 
         />
 
-    <EditText
+        <EditText
         android:id="@+id/editName"
 
         android:layout_width="0dp"
@@ -62,7 +70,7 @@
         app:layout_constraintEnd_toStartOf="@+id/btnGreet"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageButton
+        <ImageButton
         android:id="@+id/btnShowDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -75,7 +83,7 @@
         app:layout_constraintTop_toBottomOf="@+id/editName"
         tools:ignore="SpeakableTextPresentCheck" />
 
-    <TextView
+        <TextView
         android:id="@+id/labelCurrentAge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -88,4 +96,24 @@
         app:layout_constraintStart_toEndOf="@+id/btnShowDetails"
         app:layout_constraintTop_toBottomOf="@+id/editName" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Show my dialog"
+            android:layout_margin="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/labelHello"
+            android:onClick="showDialog" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/dugmence"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@android:drawable/arrow_up_float"/>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+

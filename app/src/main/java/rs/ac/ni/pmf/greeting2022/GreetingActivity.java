@@ -1,12 +1,8 @@
 package rs.ac.ni.pmf.greeting2022;
 
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -18,7 +14,7 @@ import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
-public class GreetingActivity extends AppCompatActivity {
+public class GreetingActivity extends AppCompatActivity implements MyDialog.MyDialogListener {
 
     public static final String TAG = "Greeting_info";
     //private int _currentAge = -1;
@@ -151,5 +147,25 @@ public class GreetingActivity extends AppCompatActivity {
         if(_person != null) {
             currentAge.setText("Current age " + _person.getAge());
         }
+    }
+
+    public void showDialog(View view) {
+        final MyDialog myDialog = new MyDialog();
+        myDialog.show(getSupportFragmentManager(), "MY_DIALOG");
+    }
+
+    @Override
+    public void onYes() {
+        Log.i(TAG, "onYes");
+    }
+
+    @Override
+    public void onNo() {
+        Log.i(TAG, "onNo");
+    }
+
+    @Override
+    public void onCancel() {
+        Log.i(TAG, "onCancel");
     }
 }
