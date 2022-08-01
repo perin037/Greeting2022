@@ -3,18 +3,22 @@ package rs.ac.ni.pmf.greeting2022;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
-public class GreetingActivity extends AppCompatActivity implements MyDialog.MyDialogListener {
+public class GreetingActivity extends AppCompatActivity implements MyDialog.MyDialogListener, CustomDialog.CustomDialogListener {
 
     public static final String TAG = "Greeting_info";
     //private int _currentAge = -1;
@@ -150,10 +154,50 @@ public class GreetingActivity extends AppCompatActivity implements MyDialog.MyDi
     }
 
     public void showDialog(View view) {
+        //showSimpleDialog();
+        //showListDialog();
+        //showSingleChoiseDialog();
+        //showMultiChoiseDialog();
+        //showCustomDialog();
+
+        /*final TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+                Log.i(TAG, "Time picked: " + hourOfDay + ":" + minute);
+            }
+        }, 0, 0, true);
+        timePickerDialog.show();*/
+
+        final DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                Log.i(TAG, "Date picked: " + day + "." + (month+1) + "." + year);
+            }
+        }, 2022, 3, 4);
+        datePickerDialog.show();
+    }
+
+    private void showSimpleDialog(){
         final MyDialog myDialog = new MyDialog();
         myDialog.show(getSupportFragmentManager(), "MY_DIALOG");
     }
 
+    private void showListDialog(){
+        final ListDialog myDialog = new ListDialog();
+        myDialog.show(getSupportFragmentManager(), "MY_DIALOG");
+    }
+    private void showSingleChoiseDialog(){
+        final SingleChoiseDialog myDialog = new SingleChoiseDialog();
+        myDialog.show(getSupportFragmentManager(), "MY_DIALOG");
+    }
+    private void showMultiChoiseDialog(){
+        final MultiChoiseDialog myDialog = new MultiChoiseDialog();
+        myDialog.show(getSupportFragmentManager(), "MY_DIALOG");
+    }
+    private void showCustomDialog(){
+        final CustomDialog myDialog = new CustomDialog();
+        myDialog.show(getSupportFragmentManager(), "MY_DIALOG");
+    }
     @Override
     public void onYes() {
         Log.i(TAG, "onYes");
@@ -167,5 +211,10 @@ public class GreetingActivity extends AppCompatActivity implements MyDialog.MyDi
     @Override
     public void onCancel() {
         Log.i(TAG, "onCancel");
+    }
+
+    @Override
+    public void onYes(String username, String password) {
+        Log.i(TAG, "Answer> Username: " + username + ", password: " + password);
     }
 }

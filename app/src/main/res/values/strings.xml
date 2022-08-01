@@ -9,6 +9,8 @@
     <string name="enter_your_age">Enter your age</string>
     <string name="enter_your_last_name">enter_your_last_name</string>
     <string name="enter_your_first_name">enter_your_first_name</string>
+    <string name="username">Enter username</string>
+    <string name="password">Enter password</string>
 
     <plurals name="greting">
         <item quantity="other">Name %1$s, you are %2$d old and surname %3$s!</item>
