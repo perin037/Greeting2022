@@ -1,13 +1,17 @@
 package rs.ac.ni.pmf.greeting2022;
 
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -27,6 +31,8 @@ public class GreetingActivity extends AppCompatActivity implements MyDialog.MyDi
     private TextView _label;
 
     private Person _person;
+
+    private Button _showDialogButton;
 
     //dodato
     //private ActivityResultLauncher<Intent> _detailsActivityLauncher;
@@ -66,6 +72,16 @@ public class GreetingActivity extends AppCompatActivity implements MyDialog.MyDi
                     }
                 }*/
         /*);*/
+
+        _showDialogButton = findViewById(R.id.buttonDialog);
+        _showDialogButton.setOnClickListener(this::showDialog);
+        registerForContextMenu(_showDialogButton);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getMenuInflater().inflate(R.menu.button_context_menu, menu);
     }
 
     public void sayHello(View view) {
@@ -216,5 +232,30 @@ public class GreetingActivity extends AppCompatActivity implements MyDialog.MyDi
     @Override
     public void onYes(String username, String password) {
         Log.i(TAG, "Answer> Username: " + username + ", password: " + password);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == R.id.new_game){
+            Toast.makeText(this,"New game created...", Toast.LENGTH_SHORT).show();
+        }
+        if(item.getItemId() == R.id.delete_game){
+            Toast.makeText(this,"Game Deleted...", Toast.LENGTH_SHORT).show();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == R.id.context_menu_button_disable){
+            _showDialogButton.setEnabled(false);
+        }
+        return super.onContextItemSelected(item);
     }
 }
